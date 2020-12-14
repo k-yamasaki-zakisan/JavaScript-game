@@ -39,6 +39,8 @@
         const brickPadding = 10;
         const brickOffsetTop = 30;
         const brickOffsetLeft = 30;
+        // スコア追加
+        let score = 0;
 
         let bricks = [];
         for(let c=0; c<brickColumnCount; c++) {
@@ -90,10 +92,21 @@
                         if(x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
                             dy = -dy;
                             b.status = 0;
+                            score++;
+                            if(score == brickRowCount*brickColumnCount) {
+                                alert("YOU WIN, CONGRATULATIONS!");
+                                document.location.reload();
+                            }
                         }
                     }
                 }
             }
+        }
+
+        function drawScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStype = "#0095D";
+            ctx.fillText("Score: "+score, 8, 20);
         }
 
         // キーボードが押されているか検知
@@ -124,6 +137,7 @@
             drawBricks();
             drawBAll();
             drawPaddle();
+            drawScore();
             collisionDetection();
 
             // ボールのバウンド処理
