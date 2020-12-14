@@ -13,16 +13,21 @@
     </body>
 
     <script>
+        // htmlの要素を取得
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
+        // ボールの初期配置位置
         let x = canvas.width/2;
         let y = canvas.height-30;
-        const dx = 2;
-        const dy = -2;
+        // 縦横の動く速度
+        let dx = 2;
+        let dy = -2;
+        // ボールの半径
+        const ballRadius = 10;
 
         function drawBAll() {
             ctx.beginPath();
-            ctx.arc(x, y, 10, 0, Math.PI*2);
+            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
             ctx.fillStyle = "#0095DD";
             ctx.fill();
             ctx.closePath();
@@ -32,6 +37,15 @@
             // 軌跡の削除
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBAll();
+
+            // ボールのバウンド処理
+            if(x+dx > canvas.width-ballRadius || x+dx < ballRadius) {
+                dx = -dx;
+            }
+            if(y+dy > canvas.height-ballRadius || y+dy < ballRadius) {
+                dy = -dy;
+            }
+
             x += dx;
             y += dy;
         }
